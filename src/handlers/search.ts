@@ -5,19 +5,15 @@ import {
   ITunesEntityType,
   searchItunes,
 } from "../lib/itunes";
-
-function serialize(value: string | string[]) {
-  if (Array.isArray(value)) return decodeURI(value[value.length - 1]);
-  return decodeURI(value);
-}
+import { serializeQuery } from "../lib/util";
 
 const app = new Hono();
 
 app.get(
   "/",
   validator("query", (value, c) => {
-    const query = serialize(value["query"]);
-    const type = serialize(value["type"]);
+    const query = serializeQuery(value["query"]);
+    const type = serializeQuery(value["type"]);
     if (!query) {
       return c.text("Provide query", 400);
     }

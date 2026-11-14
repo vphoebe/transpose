@@ -1,22 +1,16 @@
 import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { validator } from "hono/validator";
 import { resolveIdFromUrl } from "../lib/url";
 import { resolveItunesId } from "../lib/itunes";
+import { serializeQuery } from "../lib/util";
 
 const app = new Hono();
 
-app.post(
+app.get(
   "/",
-  validator("header", (value) => {
-    if (value["content-type"] !== "application/json") {
-      throw new HTTPException(400, {
-        message: "Content-Type is required",
-      });
-    }
-  }),
-  validator("json", (value, c) => {
-    const rawUrl = value["url"];
+  validator("query", (value, c) => {
+    const rawUrl = serializeQuery(value["url"]);
+    console.log(rawUrl);
     try {
       const url = new URL(rawUrl);
       return {
@@ -27,8 +21,7 @@ app.post(
     }
   }),
   async (c) => {
-    const body = c.req.valid("json");
-    const { url } = body;
+    const { url } = c.req.valid("query");
 
     const resolved = resolveIdFromUrl(url);
     if (!resolved || !resolved.id) {

@@ -76,8 +76,11 @@ export async function resolveItunesId(id: string) {
 }
 
 export async function searchItunes(query: string, type: ITunesEntityType) {
-  const url = `https://itunes.apple.com/search?term=${query}&media=music&entity=${type}`;
-  const response = await fetch(encodeURI(url));
+  const url =
+    `https://itunes.apple.com/search` +
+    `?term=${encodeURIComponent(query)}` +
+    `&media=music&entity=${encodeURIComponent(type)}`;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Upstream iTunes error.");
   }
