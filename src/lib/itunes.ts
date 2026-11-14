@@ -1,4 +1,4 @@
-import type { LookupResult } from "./types";
+import type { TransposeResult } from "./types";
 
 interface ITunesResponse<T> {
   resultCount: number;
@@ -35,26 +35,33 @@ type ITunesLookupResponse = ITunesResponse<ITunesResult>;
 export type ITunesEntityType = "album" | "musicArtist" | "song";
 export const ALLOWED_ITUNES_ENTITY_TYPES = ["album", "musicArtist", "song"];
 
-function parseResult(item: ITunesResult | null) {
+function parseResult(item: ITunesResult | null): TransposeResult | null {
   if (!item) return null;
-  const result: Partial<LookupResult> = {
+  const base = {
+    service: "itunes",
     type: item.wrapperType,
     artistName: item.artistName,
   };
 
   switch (item.wrapperType) {
     case "artist":
-      result.url = item.artistLinkUrl;
-      return result as LookupResult;
+      return {
+        ...base,
+        url: item.artistLinkUrl,
+      };
     case "collection":
-      result.url = item.collectionViewUrl;
-      result.collectionName = item.collectionName;
-      return result as LookupResult;
+      return {
+        ...base,
+        url: item.collectionViewUrl,
+        collectionName: item.collectionName,
+      };
     case "track":
-      result.url = item.trackViewUrl;
-      result.collectionName = item.collectionName;
-      result.trackName = item.trackName;
-      return result as LookupResult;
+      return {
+        ...base,
+        url: item.collectionViewUrl,
+        collectionName: item.collectionName,
+        trackName: item.trackName,
+      };
   }
 }
 

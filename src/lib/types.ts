@@ -1,4 +1,5 @@
-export interface LookupResult {
+export interface TransposeResult {
+  service: string;
   type: string;
   url: string;
   artistName: string;

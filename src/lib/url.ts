@@ -3,14 +3,14 @@ function resolveServiceFromUrl(url: URL) {
     url.hostname === "music.apple.com" ||
     url.hostname === "itunes.apple.com"
   ) {
-    return "apple-music";
+    return "itunes";
   }
   return null;
 }
 
 export function resolveIdFromUrl(url: URL) {
   const service = resolveServiceFromUrl(url);
-  if (service === "apple-music") {
+  if (service === "itunes") {
     const definiteId = url.searchParams.get("i");
     const trailingIdMatch = url.pathname.match(/\d+$/);
     return {

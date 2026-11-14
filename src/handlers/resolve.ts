@@ -36,7 +36,7 @@ app.post(
     }
 
     switch (resolved.service) {
-      case "apple-music":
+      case "itunes":
         const data = await resolveItunesId(resolved.id);
         if (!data) {
           return c.notFound();
