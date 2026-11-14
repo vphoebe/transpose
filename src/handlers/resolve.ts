@@ -10,7 +10,6 @@ app.get(
   "/",
   validator("query", (value, c) => {
     const rawUrl = serializeQuery(value["url"]);
-    console.log(rawUrl);
     try {
       const url = new URL(rawUrl);
       return {
