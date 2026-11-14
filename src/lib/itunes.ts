@@ -1,8 +1,8 @@
 import type { TransposeResult } from "./types";
 
-interface ITunesResponse<T> {
+interface ITunesResponse {
   resultCount: number;
-  results: T[];
+  results: ITunesResult[];
 }
 
 interface ITunesTrack {
@@ -30,7 +30,7 @@ interface ITunesArtist {
 }
 
 type ITunesResult = ITunesTrack | ITunesCollection | ITunesArtist;
-type ITunesLookupResponse = ITunesResponse<ITunesResult>;
+type ITunesLookupResponse = ITunesResponse;
 
 export type ITunesEntityType = "album" | "musicArtist" | "song";
 export const ALLOWED_ITUNES_ENTITY_TYPES = ["album", "musicArtist", "song"];

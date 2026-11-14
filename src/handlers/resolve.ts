@@ -22,7 +22,7 @@ app.post(
       return {
         url,
       };
-    } catch (err) {
+    } catch (_e) {
       return c.text("Invalid URL", 400);
     }
   }),
@@ -36,12 +36,13 @@ app.post(
     }
 
     switch (resolved.service) {
-      case "itunes":
+      case "itunes": {
         const data = await resolveItunesId(resolved.id);
         if (!data) {
           return c.notFound();
         }
         return c.json(data);
+      }
       default:
         return c.notFound();
     }
