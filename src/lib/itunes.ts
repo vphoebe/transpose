@@ -58,7 +58,7 @@ function parseResult(item: ITunesResult | null): TransposeResult | null {
     case "track":
       return {
         ...base,
-        url: item.collectionViewUrl,
+        url: item.trackViewUrl,
         collectionName: item.collectionName,
         trackName: item.trackName,
       };
