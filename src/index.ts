@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import resolve from "./handlers/resolve";
-import search from "./handlers/search";
+import resolve from "./routes/resolve";
+import search from "./routes/search";
 
 const app = new Hono().basePath("/api/v1");
 
